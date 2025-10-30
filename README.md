@@ -57,12 +57,12 @@ Follow these instructions to get a local copy up and running for development.
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/scrum-report-builder.git
+    git clone https://github.com/aadilahammad86/Scrum_Report_Builder.git
     ```
 
 2.  **Navigate to the project directory:**
     ```sh
-    cd scrum-report-builder
+    cd Scrum_Report_Builder
     ```
 
 3.  **Install dependencies:**
