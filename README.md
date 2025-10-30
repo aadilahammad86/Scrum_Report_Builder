@@ -1,9 +1,3 @@
-Of course. Based on the excellent, detailed information you provided, here is a beautiful and comprehensive `README.md` file ready for your GitHub repository.
-
-It follows a professional structure designed to be inviting for users and clear for developers. Just copy and paste the content below into a `README.md` file in your project's root directory.
-
----
-
 # 📊 Scrum Report Builder
 
 <p align="center">
@@ -20,7 +14,7 @@ An elegant and lightweight desktop app designed to help you quickly log daily wo
 <p align="center">
   <em>(Strongly recommended: Add a screenshot or GIF of your app here!)</em>
   <br>
-  <img src="/path/to/your/screenshot.png" alt="Scrum Report Builder Screenshot" width="700">
+  <img src="./image.png" alt="Scrum Report Builder Screenshot">
 </p>
 
 ---
