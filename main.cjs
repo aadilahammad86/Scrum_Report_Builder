@@ -20,7 +20,7 @@ function createWindow() {
   //   // Optional: Open DevTools automatically in development
   //   win.webContents.openDevTools();
   // } else {
-    win.loadFile(path.join(__dirname, 'dist', 'index.html'));
+  win.loadFile(path.join(__dirname, 'dist', 'index.html'));
   // }
 }
 // ===============================
@@ -28,10 +28,19 @@ function createWindow() {
 // ===============================
 ipcMain.handle("export-worklog", async (event, data) => {
   try {
-    const { inTime, breakStart, breakEnd, outTime, tasksWorkedOn, willWorkOn } = data;
+    const { inTime, breakStart, breakEnd, outTime, tasksWorkedOn, willWorkOn, date } = data;
 
-    const today = new Date();
-    const dateStr = today.toLocaleDateString("en-GB").replace(/\//g, "-"); // DD-MM-YYYY
+    let dateStr;
+    if (date) {
+      // expect date in YYYY-MM-DD or comparable format, but let's stick to the requested DD-MM-YYYY for display
+      // If the incoming 'date' is a Date object or ISO string, parse it.
+      // Assuming 'date' is passed as a string or Date from frontend.
+      const d = new Date(date);
+      dateStr = d.toLocaleDateString("en-GB").replace(/\//g, "-");
+    } else {
+      const today = new Date();
+      dateStr = today.toLocaleDateString("en-GB").replace(/\//g, "-"); // DD-MM-YYYY
+    }
 
     const baseDir = path.join(process.env.HOME || process.env.USERPROFILE, "Documents", "WorkLogs");
     if (!fs.existsSync(baseDir)) fs.mkdirSync(baseDir, { recursive: true });
@@ -92,4 +101,48 @@ ipcMain.handle("export-worklog", async (event, data) => {
 // ===============================
 // 🚀 APP INITIALIZATION
 // ===============================
+// ===============================
+// 📜 HISTORY HANDLERS
+// ===============================
+ipcMain.handle("get-history", async () => {
+  try {
+    const baseDir = path.join(process.env.HOME || process.env.USERPROFILE, "Documents", "WorkLogs");
+    if (!fs.existsSync(baseDir)) return [];
+
+    const files = fs.readdirSync(baseDir).filter(f => f.startsWith("Work_Status_") && f.endsWith(".txt"));
+
+    // Sort by date descending (newest first)
+    // Filename format: Work_Status_DD-MM-YYYY.txt
+    const history = files.map(file => {
+      const datePart = file.replace("Work_Status_", "").replace(".txt", "");
+      // Parse DD-MM-YYYY to Date object for sorting
+      const [d, m, y] = datePart.split("-").map(Number);
+      const dateObj = new Date(y, m - 1, d);
+      return {
+        filename: file,
+        dateStr: datePart, // DD-MM-YYYY
+        dateObj: dateObj.getTime(), // Timestamp for easier sorting
+        path: path.join(baseDir, file)
+      };
+    }).sort((a, b) => b.dateObj - a.dateObj);
+
+    return history;
+  } catch (err) {
+    console.error("Error fetching history:", err);
+    return [];
+  }
+});
+
+ipcMain.handle("read-worklog", async (event, filePath) => {
+  try {
+    if (fs.existsSync(filePath)) {
+      return fs.readFileSync(filePath, "utf-8");
+    }
+    return null;
+  } catch (err) {
+    console.error("Error reading worklog:", err);
+    return null;
+  }
+});
+
 app.whenReady().then(createWindow);
