@@ -1,0 +1,62 @@
+{
+    "name": "scrum-report-builder",
+    "private": true,
+    "version": "1.0.0",
+    "description": "A daily work log tracking application built with Electron and React.",
+    "main": "main.cjs",
+    "author": "Aadil Ahammad",
+    "license": "MIT",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "electron": "electron .",
+        "electron:dev": "concurrently -k \"cross-env BROWSER=none npm run dev\" \"wait-on http://localhost:5173 && electron .\"",
+        "pack": "electron-builder --dir",
+        "dist": "npm run build && electron-builder"
+    },
+    "dependencies": {
+        "@radix-ui/react-slot": "^1.0.2",
+        "class-variance-authority": "^0.7.0",
+        "clsx": "^2.1.0",
+        "lucide-react": "^0.300.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "tailwind-merge": "^2.2.0",
+        "tailwindcss-animate": "^1.0.7"
+    },
+    "devDependencies": {
+        "@types/react": "^18.2.43",
+        "@types/react-dom": "^18.2.17",
+        "@vitejs/plugin-react-swc": "^3.5.0",
+        "autoprefixer": "^10.4.16",
+        "concurrently": "^8.2.2",
+        "cross-env": "^7.0.3",
+        "electron": "^28.1.0",
+        "electron-builder": "^24.9.1",
+        "eslint": "^8.55.0",
+        "eslint-plugin-react": "^7.33.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "eslint-plugin-react-refresh": "^0.4.5",
+        "postcss": "^8.4.32",
+        "tailwindcss": "^3.4.0",
+        "vite": "^5.0.0",
+        "wait-on": "^7.2.0"
+    },
+    "build": {
+        "appId": "com.scrum.reportbuilder",
+        "productName": "Scrum Report Builder",
+        "directories": {
+            "output": "dist-electron"
+        },
+        "files": [
+            "dist/**/*",
+            "main.cjs",
+            "preload.js",
+            "package.json"
+        ],
+        "win": {
+            "target": "nsis"
+        }
+    }
+}
