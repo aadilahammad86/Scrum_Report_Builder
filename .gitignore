@@ -111,3 +111,7 @@ dist-electron/win-unpacked/locales/zh-CN.pak
 dist-electron/win-unpacked/locales/zh-TW.pak
 dist-electron/win-unpacked/resources/app-update.yml
 dist-electron/win-unpacked/resources/app.asar
+dist-electron/latest.yml
+dist-electron/Scrum Report Builder Setup 1.0.0.exe
+dist-electron/Scrum Report Builder Setup 1.0.0.exe.blockmap
+dist-electron/win-unpacked/resources/elevate.exe
