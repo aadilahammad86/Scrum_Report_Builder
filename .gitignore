@@ -35,3 +35,4 @@ node_modules
 Scrum_Report_Builder.code-workspace
 dist
 release-builds
+package-lock.json
